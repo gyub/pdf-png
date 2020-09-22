@@ -2,6 +2,7 @@ import sys,fitz
 import os
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import messagebox
 
 def all_files_path(rootDir):                    #遍历获取文件函数
     for root,dirs,files in os.walk(rootDir):    #分别代表根目录、文件夹、文件
@@ -33,14 +34,16 @@ if __name__=="__main__":
     filepaths=[]                              #文件绝对路径列表
     root = tk.Tk()
     root.withdraw()
-    Folderpath = filedialog.askdirectory()    #根目录
-    all_files_path(Folderpath)                #调用文件遍历函数，获取文件绝对路径列表
+    messagebox.showinfo("提示","请选择文件所在的文件夹")
+    InputFolderpath = filedialog.askdirectory()    #选择根目录
+    all_files_path(InputFolderpath)                #调用文件遍历函数，获取文件绝对路径列表
     for pdf_path in filepaths:                #遍历文件列表，将列表里的pdf文件全部转为png
 ##        print(pdf_path)
         (image_path,pdf_name)=os.path.split(pdf_path) #将转换后的文件保存在pdf文件存放的文件夹中
         (image_name,extension)=os.path.splitext(pdf_name)#转换后文件名采用原pdf文件名
         if extension=='.pdf':
             pyMuPDF_fitz(pdf_path,image_path,image_name)
+    messagebox.showinfo("提示","文件转换已完成")
         
     
     
